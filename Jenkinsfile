@@ -2,8 +2,12 @@ pipeline {
     agent any
 
     environment {
-        // Зчитуємо масковані секрети з Jenkins Credentials 
+        // Terraform автоматично підхоплює змінні, які починаються з TF_VAR_
         TF_VAR_do_token = credentials('DO_PAT')
+        TF_VAR_spaces_access_id = credentials('SPACES_ACCESS_KEY_ID')
+        TF_VAR_spaces_secret_key = credentials('SPACES_SECRET_ACCESS_KEY')
+        
+        // Ці змінні потрібні для бекенду (збереження стану)
         AWS_ACCESS_KEY_ID = credentials('SPACES_ACCESS_KEY_ID')
         AWS_SECRET_ACCESS_KEY = credentials('SPACES_SECRET_ACCESS_KEY')
     }
@@ -26,9 +30,7 @@ pipeline {
         stage('Terraform Validate & Plan') {
             steps {
                 dir('task1') {
-                    // Перевірка правильності розгортання без розгортання 
                     sh 'terraform validate'
-                    // Якщо plan падає з помилкою, Jenkins автоматично зупиняє конвеєр 
                     sh 'terraform plan -out=tfplan'
                 }
             }
@@ -37,7 +39,6 @@ pipeline {
         stage('Terraform Apply') {
             steps {
                 dir('task1') {
-                    // Реальне розгортання хмарних ресурсів, використовуючи Terraform [cite: 3, 4]
                     sh 'terraform apply -auto-approve tfplan'
                 }
             }
