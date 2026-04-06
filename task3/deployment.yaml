@@ -5,7 +5,7 @@ metadata:
   labels:
     app: exam-app
 spec:
-  replicas: 2 # Запустимо 2 копії контейнера для надійності
+  replicas: 2
   selector:
     matchLabels:
       app: exam-app
@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: nginx-container
-        image: nginx:latest # Використовуємо стандартний образ Nginx
+        image: nginx:latest
         ports:
         - containerPort: 80
