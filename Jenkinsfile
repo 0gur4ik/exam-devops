@@ -59,8 +59,9 @@ pipeline {
                 }
             }
         }
-    }
-    stage('Kubernetes Deploy') {
+        
+        // Тепер цей етап знаходиться ТУТ, всередині блоку stages
+        stage('Kubernetes Deploy') {
             when {
                 expression { params.TARGET_IP != '' }
             }
@@ -78,7 +79,7 @@ pipeline {
                 }
             }
         }
+    } // <-- А ось тут тепер закривається блок stages
 }
-
 
 
