@@ -60,4 +60,25 @@ pipeline {
             }
         }
     }
+    stage('Kubernetes Deploy') {
+            when {
+                expression { params.TARGET_IP != '' }
+            }
+            steps {
+                // Використовуємо наш SSH ключ для доступу
+                sshagent(credentials: ['ansible-ssh-key']) {
+                    // 1. Копіюємо папку task3 на сервер andrus-node
+                    sh 'scp -o StrictHostKeyChecking=no -r task3/ root@${TARGET_IP}:/root/'
+                    
+                    // 2. Підключаємося по SSH і кажемо kubectl застосувати ці файли
+                    sh 'ssh -o StrictHostKeyChecking=no root@${TARGET_IP} "kubectl apply -f /root/task3/"'
+                    
+                    // 3. Виводимо статус запущених ресурсів для перевірки в логах Jenkins
+                    sh 'ssh -o StrictHostKeyChecking=no root@${TARGET_IP} "kubectl get all"'
+                }
+            }
+        }
 }
+
+
+
