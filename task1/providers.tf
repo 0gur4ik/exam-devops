@@ -12,7 +12,7 @@ terraform {
       s3 = "https://fra1.digitaloceanspaces.com"
     }
     region                      = "us-east-1"
-    bucket                      = "andrus-tfstate-bucket" 
+    bucket                      = "exam-tfstate-bucket-andrus" 
     key                         = "terraform.tfstate"
     
     # Вимикаємо специфічні AWS-перевірки, які DO Spaces не підтримує
