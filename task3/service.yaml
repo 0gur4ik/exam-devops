@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: exam-app-service
+spec:
+  type: NodePort
+  selector:
+    app: exam-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+      nodePort: 30080 # Стандартний порт для доступу ззовні
