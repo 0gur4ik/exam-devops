@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: exam-app-deployment
+  labels:
+    app: exam-app
+spec:
+  replicas: 2 # Запустимо 2 копії контейнера для надійності
+  selector:
+    matchLabels:
+      app: exam-app
+  template:
+    metadata:
+      labels:
+        app: exam-app
+    spec:
+      containers:
+      - name: nginx-container
+        image: nginx:latest # Використовуємо стандартний образ Nginx
+        ports:
+        - containerPort: 80
