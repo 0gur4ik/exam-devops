@@ -33,6 +33,11 @@ resource "digitalocean_firewall" "main_firewall" {
     port_range       = "8000-8003"
     source_addresses = ["0.0.0.0/0", "::/0"]
   }
+  inbound_rule {
+    protocol         = "tcp"
+    port_range       = "30080"
+    source_addresses = ["0.0.0.0/0", "::/0"]
+  }
 
   # Вихідні (outbound): підключення портів: 1-65535 [cite: 13]
   outbound_rule {
